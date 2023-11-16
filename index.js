@@ -1,38 +1,44 @@
-// const { Command } = require('commander');
-// const program = new Command();
-// program
-//   .option('-a, --action <type>', 'choose action')
-//   .option('-i, --id <type>', 'user id')
-//   .option('-n, --name <type>', 'user name')
-//   .option('-e, --email <type>', 'user email')
-//   .option('-p, --phone <type>', 'user phone');
+const contacts = require("./contacts");
 
-// program.parse(process.argv);
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
 
-// const argv = program.opts();
+program.parse(process.argv);
 
-// // TODO: рефакторити
-// function invokeAction({ action, id, name, email, phone }) {
-//   switch (action) {
-//     case 'list':
-//       // ...
-//       break;
+const argv = program.opts();
 
-//     case 'get':
-//       // ... id
-//       break;
+// TODO: рефакторити
+async function invokeAction({ action, id, name, email, phone }) {
+  switch (action) {
+    case "list":
+      const allContacts = await contacts.listContacts();
+      return console.table(allContacts);
 
-//     case 'add':
-//       // ... name email phone
-//       break;
+    case "get":
+      const contactById = await contacts.getContactById(id);
+      return console.log(contactById);
 
-//     case 'remove':
-//       // ... id
-//       break;
+    case "add":
+      const newContact = await contacts.addContact({
+        name,
+        email,
+        phone,
+      });
+      return console.log(newContact);
 
-//     default:
-//       console.warn('\x1B[31m Unknown action type!');
-//   }
-// }
+    case "remove":
+      // ... id
+      break;
 
-// invokeAction(argv);
+    default:
+      console.warn("\x1B[31m Unknown action type!");
+  }
+}
+
+invokeAction(argv);
