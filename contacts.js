@@ -2,11 +2,13 @@ const fs = require("fs/promises");
 const path = require("path");
 
 // Розкоментуй і запиши значення
-// const contactsPath = ;
+const contactsPath = path.join(__dirname, "db", "contacts.json");
 
 // TODO: задокументувати кожну функцію
-function listContacts() {
+async function listContacts() {
   // ...твій код. Повертає масив контактів.
+  const data = await fs.readFile(contactsPath);
+  return console.log(JSON.parse(data));
 }
 
 function getContactById(contactId) {
@@ -20,13 +22,3 @@ function removeContact(contactId) {
 function addContact(name, email, phone) {
   // ...твій код. Повертає об'єкт доданого контакту.
 }
-
-//============================
-
-const name = ["Alex", "Sofi", "Mejson", "Gibson"];
-const age = [23, 45, 67, 98];
-const object = {
-  name,
-  age,
-};
-module.exports = object;
