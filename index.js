@@ -1,5 +1,11 @@
-const contacts = require("./contacts");
+//* Для парсингу аргументів командного рядка можна використовувати пакет yargs
+//* або модуль commander (більш популярна альтернатива модуля yargs)
 
+const contacts = require("./contacts");
+// //todo:============= Пакет yargs ================
+// const argv = require('yargs').argv;
+// //todo===========================================
+//todo:========== Модуль commander ==============
 const { Command } = require("commander");
 const program = new Command();
 program
@@ -10,8 +16,8 @@ program
   .option("-p, --phone <type>", "user phone");
 
 program.parse(process.argv);
-
 const argv = program.opts();
+//todo============================================
 
 // TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
@@ -51,17 +57,17 @@ async function invokeAction({ action, id, name, email, phone }) {
 
 invokeAction(argv);
 
-// # Отримуємо і виводимо весь список контактів у вигляді таблиці (console.table)
-// node index.js --action="list"
+//? # Отримуємо і виводимо весь список контактів у вигляді таблиці (console.table)
+//? node index.js --action="list"
 
-// # Отримуємо контакт по id і виводимо у консоль об'єкт контакту або null, якщо контакту з таким id не існує.
-// node index.js --action="get" --id 05olLMgyVQdWRwgKfg5J6
+//? # Отримуємо контакт по id і виводимо у консоль об'єкт контакту або null, якщо контакту з таким id не існує.
+//? node index.js --action="get" --id 05olLMgyVQdWRwgKfg5J6
 
-// # Додаємо контакт та виводимо в консоль об'єкт новоствореного контакту
-// node index.js --action="add" --name Mango --email mango@gmail.com --phone 322-22-22
+//? # Додаємо контакт та виводимо в консоль об'єкт новоствореного контакту
+//? node index.js --action="add" --name Mango --email mango@gmail.com --phone 322-22-22
 
-// # Оновлюємо контакт та виводимо в консоль об'єкт оновленого контакту
-// node index.js --action="updateById" --id AeHIrLTr6JkxGE6SN-0Rw --name Alex --email alex@gmail.com --phone 789-56-34
+//? # Оновлюємо контакт та виводимо в консоль об'єкт оновленого контакту
+//? node index.js --action="updateById" --id AeHIrLTr6JkxGE6SN-0Rw --name Alex --email alex@gmail.com --phone 789-56-34
 
-// # Видаляємо контакт та виводимо в консоль об'єкт видаленого контакту або null, якщо контакту з таким id не існує.
-// node index.js --action="remove" --id qdggE76Jtbfd9eWJHrssH
+//? # Видаляємо контакт та виводимо в консоль об'єкт видаленого контакту або null, якщо контакту з таким id не існує.
+//? node index.js --action="remove" --id qdggE76Jtbfd9eWJHrssH
