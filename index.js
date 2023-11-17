@@ -32,9 +32,17 @@ async function invokeAction({ action, id, name, email, phone }) {
       });
       return console.log(newContact);
 
+    case "updateById":
+      const updateContact = await contacts.updateContactById(id, {
+        name,
+        email,
+        phone,
+      });
+      return console.log(updateContact);
+
     case "remove":
-      // ... id
-      break;
+      const deleteContact = await contacts.removeContact(id);
+      return console.log(deleteContact);
 
     default:
       console.warn("\x1B[31m Unknown action type!");
@@ -42,3 +50,18 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv);
+
+// # Отримуємо і виводимо весь список контактів у вигляді таблиці (console.table)
+// node index.js --action="list"
+
+// # Отримуємо контакт по id і виводимо у консоль об'єкт контакту або null, якщо контакту з таким id не існує.
+// node index.js --action="get" --id 05olLMgyVQdWRwgKfg5J6
+
+// # Додаємо контакт та виводимо в консоль об'єкт новоствореного контакту
+// node index.js --action="add" --name Mango --email mango@gmail.com --phone 322-22-22
+
+// # Оновлюємо контакт та виводимо в консоль об'єкт оновленого контакту
+// node index.js --action="updateById" --id AeHIrLTr6JkxGE6SN-0Rw --name Alex --email alex@gmail.com --phone 789-56-34
+
+// # Видаляємо контакт та виводимо в консоль об'єкт видаленого контакту або null, якщо контакту з таким id не існує.
+// node index.js --action="remove" --id qdggE76Jtbfd9eWJHrssH
